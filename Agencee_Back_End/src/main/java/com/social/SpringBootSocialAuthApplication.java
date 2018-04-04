@@ -18,6 +18,7 @@ public class SpringBootSocialAuthApplication /*implements CommandLineRunner*/{
 	private ClientRepository cr;
 	
 	//test git
+	//test git noel
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringBootSocialAuthApplication.class, args);
