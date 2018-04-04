@@ -16,6 +16,8 @@ import com.social.entities.Client;
 public class SpringBootSocialAuthApplication /*implements CommandLineRunner*/{
 	@Autowired
 	private ClientRepository cr;
+	
+	//test git
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringBootSocialAuthApplication.class, args);
