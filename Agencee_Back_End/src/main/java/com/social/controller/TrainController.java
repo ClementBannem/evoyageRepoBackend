@@ -22,12 +22,13 @@ import com.social.entities.Train;
 
 @RestController
 @RequestMapping("train")
+@CrossOrigin(origins="http://localhost:4200",allowedHeaders="*")
 public class TrainController {
  
 	@Autowired
     private TrainRepository trainRepository;
 	
-    @GetMapping(value = "/listetransport", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/listeTransportTrain", produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Train> getAll() {
 		List<Train> list = new ArrayList<>();
 		Iterable<Train> train = trainRepository.findAll();
@@ -36,8 +37,7 @@ public class TrainController {
 		return list;
 	}
     
-	@CrossOrigin
-	@RequestMapping(value = "/posttransport", method = RequestMethod.POST)
+	@RequestMapping(value = "/postTransportTrain", method = RequestMethod.POST)
 	public ResponseEntity<?> createTrain(@RequestBody Train newTrain) {		
 
 		return new ResponseEntity<Train>(trainRepository.save(newTrain), HttpStatus.CREATED);

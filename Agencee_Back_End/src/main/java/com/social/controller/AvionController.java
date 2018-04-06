@@ -19,16 +19,15 @@ import org.springframework.web.bind.annotation.RestController;
 import com.social.dao.AvionRepository;
 import com.social.entities.Avion;
 
-
-
 @RestController
 @RequestMapping("avion")
+@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
 public class AvionController {
-	
+
 	@Autowired
-    private AvionRepository avionRepository;
-	
-    @GetMapping(value = "/listetransport", produces = MediaType.APPLICATION_JSON_VALUE)
+	private AvionRepository avionRepository;
+
+	@GetMapping(value = "/listeTransportAvion", produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Avion> getAll() {
 		List<Avion> list = new ArrayList<>();
 		Iterable<Avion> avion = avionRepository.findAll();
@@ -36,16 +35,14 @@ public class AvionController {
 		avion.forEach(list::add);
 		return list;
 	}
-    
-	@CrossOrigin
-	@RequestMapping(value = "/posttransport", method = RequestMethod.POST)
-	public ResponseEntity<?> createAvion(@RequestBody Avion newAvion) {		
+
+	@RequestMapping(value = "/postTransportAvion", method = RequestMethod.POST)
+	public ResponseEntity<?> createAvion(@RequestBody Avion newAvion) {
 
 		return new ResponseEntity<Avion>(avionRepository.save(newAvion), HttpStatus.CREATED);
 	}
 
-    
-    @GetMapping(value = "/findbyid/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "/findbyid/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Avion> findByLastId(@PathVariable int id) {
 
 		List<Avion> avion = avionRepository.findById(id);

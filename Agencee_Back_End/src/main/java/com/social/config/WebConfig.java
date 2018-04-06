@@ -72,9 +72,13 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
 		// ignoring the guest's urls "
 		.antMatchers("/account/register","/account/login","/logout","/fiche/postficheclient","/fiche/ficheclients"
 				,"/bateau/postbateau","/fiche/client/{id}","/fiche/updateficheclient"
-				,"/bateau/listetransport","/evenement/postevement","/evenement/listeEvenement"
-				,"/avion/posttransport","/autocar/posttransport","/train/posttransport"
-				,"/offre/postOffre").permitAll()
+				,"/bateau/listebateaux","/evenement/postevement","/evenement/listeEvenement"
+				,"/avion/postTransportAvion","/avion/listeTransportAvion","/autocar/postTransportAutocar"
+				,"/autocar/listeTransportAutocar","/train/postTransportTrain","/train/listeTransportTrain"
+				,"/offre/postOffre","/offre/listOffre","/camping/listeHebergementCamping"
+				,"/camping/postHebergementCamping","/gite/listeHebergementGite","/gite/postHebergementGite"
+				,"/residenceHoteliere/listeHebergementResidenceHoteliere"
+				,"/residenceHoteliere/postHebergementResidenceHoteliere").permitAll()
 		// authenticate all remaining URLS
 		.anyRequest().fullyAuthenticated().and()
       /* "/logout" will log the user out by invalidating the HTTP Session,

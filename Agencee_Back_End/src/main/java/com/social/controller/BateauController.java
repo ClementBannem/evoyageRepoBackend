@@ -21,6 +21,7 @@ import com.social.entities.Bateau;
 
 @RestController
 @RequestMapping("bateau")
+@CrossOrigin(origins="http://localhost:4200",allowedHeaders="*")
 public class BateauController {
 
 	@Autowired
@@ -35,7 +36,6 @@ public class BateauController {
 		return list;
 	}
 
-	@CrossOrigin
 	@RequestMapping(value = "/postbateau", method = RequestMethod.POST)
 	public ResponseEntity<?> createBateau(@RequestBody Bateau newBateau) {
 

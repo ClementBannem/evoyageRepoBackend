@@ -22,12 +22,13 @@ import com.social.entities.AutoCar;
 
 @RestController
 @RequestMapping("autocar")
+@CrossOrigin(origins="http://localhost:4200",allowedHeaders="*")
 public class AutocarController {
 	
 	@Autowired
     private AutocarRepository autocarRepository;
 	
-    @GetMapping(value = "/listetransport", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/listeTransportAutocar", produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<AutoCar> getAll() {
 		List<AutoCar> list = new ArrayList<>();
 		Iterable<AutoCar> autocar = autocarRepository.findAll();
@@ -36,8 +37,7 @@ public class AutocarController {
 		return list;
 	}
     
-	@CrossOrigin
-	@RequestMapping(value = "/posttransport", method = RequestMethod.POST)
+	@RequestMapping(value = "/postTransportAutocar", method = RequestMethod.POST)
 	public ResponseEntity<?> createAutoCar(@RequestBody AutoCar newAutoCar) {		
 
 		return new ResponseEntity<AutoCar>(autocarRepository.save(newAutoCar), HttpStatus.CREATED);

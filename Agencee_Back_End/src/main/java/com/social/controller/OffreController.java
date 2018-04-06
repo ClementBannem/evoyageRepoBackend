@@ -21,6 +21,7 @@ import com.social.entities.Offre;
 
 @RestController
 @RequestMapping("offre")
+@CrossOrigin(origins="http://localhost:4200",allowedHeaders="*")
 public class OffreController {
 	
 	@Autowired
@@ -35,7 +36,6 @@ public class OffreController {
 		return list;
 	}
     
-	@CrossOrigin
 	@RequestMapping(value = "/postOffre", method = RequestMethod.POST)
 	public ResponseEntity<?> createOffre(@RequestBody Offre newOffre) {		
 

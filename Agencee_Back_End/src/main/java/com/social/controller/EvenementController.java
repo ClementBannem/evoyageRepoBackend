@@ -20,6 +20,7 @@ import com.social.entities.Evenement;
 
 @RestController
 @RequestMapping("evenement")
+@CrossOrigin(origins="http://localhost:4200",allowedHeaders="*")
 public class EvenementController {
 	
 	  @Autowired
@@ -34,7 +35,6 @@ public class EvenementController {
 	 		return list;
 	 	}
 	     
-	 	@CrossOrigin
 	 	@RequestMapping(value = "/postevement", method = RequestMethod.POST)
 	 	public ResponseEntity<?> createEvenement(@RequestBody Evenement newEvenement) {		
 
