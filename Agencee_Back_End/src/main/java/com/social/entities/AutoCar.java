@@ -4,31 +4,26 @@ import java.util.Date;
 
 import javax.persistence.*;
 
-
 @Entity
-@Table(name="AutoCar")
-public class AutoCar extends Transport {
+@Table(name = "AutoCar")
+public class AutoCar extends Voyage {
 	private String gareAC_Depart;
 	private String gareAC_Arrive;
-	
-	
-
 
 	public AutoCar() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public AutoCar(String escale, String date_Depart, String date_Arrive, String heure_Depart, String heure_Arrive,
-			double prix) {
-		super(escale, date_Depart, date_Arrive, heure_Depart, heure_Arrive, prix);
+	public AutoCar(String escale, String libelle, String date_Depart, String date_Arrive, String heure_Depart,
+			String heure_Arrive, double prix, String compagnie) {
+		super(escale, libelle, date_Depart, date_Arrive, heure_Depart, heure_Arrive, prix, compagnie);
 		// TODO Auto-generated constructor stub
 	}
 
-	
-	public AutoCar(String escale, String date_Depart, String date_Arrive, String heure_Depart, String heure_Arrive,
-			double prix, String gareAC_Depart, String gareAC_Arrive) {
-		super(escale, date_Depart, date_Arrive, heure_Depart, heure_Arrive, prix);
+	public AutoCar(String escale, String libelle, String date_Depart, String date_Arrive, String heure_Depart,
+			String heure_Arrive, double prix, String gareAC_Depart, String gareAC_Arrive, String compagnie) {
+		super(escale, libelle, date_Depart, date_Arrive, heure_Depart, heure_Arrive, prix, compagnie);
 		this.gareAC_Depart = gareAC_Depart;
 		this.gareAC_Arrive = gareAC_Arrive;
 	}
@@ -48,9 +43,5 @@ public class AutoCar extends Transport {
 	public void setGareAC_Arrive(String gareAC_Arrive) {
 		this.gareAC_Arrive = gareAC_Arrive;
 	}
-	
-	
-	
-	
 
 }

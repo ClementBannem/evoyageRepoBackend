@@ -36,4 +36,12 @@ public class UserService {
 	public User find(Long id) {
 		return userRepository.findOne(id);
 	}
+	
+	public User findByEmail(String email) {
+		return userRepository.findByEmail(email);
+	}
+	
+	public User findByConfirmationToken(String confirmationToken) {
+		return userRepository.findByConfirmationToken(confirmationToken);
+	}
 }

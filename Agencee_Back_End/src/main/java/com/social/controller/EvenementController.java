@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,34 +21,38 @@ import com.social.entities.Evenement;
 
 @RestController
 @RequestMapping("evenement")
-@CrossOrigin(origins="http://localhost:4200",allowedHeaders="*")
+@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
 public class EvenementController {
-	
-	  @Autowired
-	     private EvenementRepository evensRepository;
-		
-	     @GetMapping(value = "/listeEvenement", produces = MediaType.APPLICATION_JSON_VALUE)
-	 	public List<Evenement> getAll() {
-	 		List<Evenement> list = new ArrayList<>();
-	 		Iterable<Evenement> evens = evensRepository.findAll();
 
-	 		evens.forEach(list::add);
-	 		return list;
-	 	}
-	     
-	 	@RequestMapping(value = "/postevement", method = RequestMethod.POST)
-	 	public ResponseEntity<?> createEvenement(@RequestBody Evenement newEvenement) {		
+	@Autowired
+	private EvenementRepository evensRepository;
 
-	 		return new ResponseEntity<Evenement>(evensRepository.save(newEvenement), HttpStatus.CREATED);
-	 	}
+	@GetMapping(value = "/listeEvenement", produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<Evenement> getAll() {
+		List<Evenement> list = new ArrayList<>();
+		Iterable<Evenement> evens = evensRepository.findAll();
 
-	     
-	     @GetMapping(value = "/findbyid/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	 	public List<Evenement> findByLastId(@PathVariable int id) {
+		evens.forEach(list::add);
+		return list;
+	}
 
-	 		List<Evenement> evens = evensRepository.findByIdE(id);
-	 		return evens;
-	 	}
-	 	
+	@RequestMapping(value = "/postevement", method = RequestMethod.POST)
+	public ResponseEntity<?> createEvenement(@RequestBody Evenement newEvenement) {
+
+		return new ResponseEntity<Evenement>(evensRepository.save(newEvenement), HttpStatus.CREATED);
+	}
+
+	@GetMapping(value = "/findbyid/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<Evenement> findByLastId(@PathVariable int id) {
+
+		List<Evenement> evens = evensRepository.findByIdE(id);
+		return evens;
+	}
+
+	@DeleteMapping(value = "/evenements/{id}")
+	public boolean deleteEvenement(@PathVariable int id) {
+		evensRepository.delete(id);
+		return true;
+	}
 
 }

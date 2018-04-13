@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -49,5 +50,10 @@ public class TrainController {
 
 		List<Train> train = trainRepository.findById(id);
 		return train;
+	}
+    @DeleteMapping(value = "/trains/{id}")
+	public boolean deleteTrain(@PathVariable int id) {
+    	trainRepository.delete(id);
+		return true;
 	}
 }

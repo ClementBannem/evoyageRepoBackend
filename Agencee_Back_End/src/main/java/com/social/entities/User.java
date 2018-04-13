@@ -61,17 +61,30 @@ public class User implements UserDetails {
 	 * Description of the property full name.
 	 */
 	private String fullName;
+	
+	@Column(name = "enabled")
+	private boolean enabled;
+	
+	@Column(name = "confirmation_token")
+	private String confirmationToken;
 
 	public User() {
 
 	}
 
-	public User(String username, String email, String password, String fullName) {
+	public User(String username, String email, String password, String role, String fullName, boolean enabled,
+			String confirmationToken) {
+		super();
 		this.username = username;
 		this.email = email;
 		this.password = password;
-		this.fullName = fullName;		
+		this.role = role;
+		this.fullName = fullName;
+		this.enabled = enabled;
+		this.confirmationToken = confirmationToken;
 	}
+
+
 
 	@JsonIgnore
 	@Override
@@ -108,7 +121,8 @@ public class User implements UserDetails {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", email=" + email + ", password=" + password + ", role="
-				+ role + ", fullName=" + fullName + "]";
+				+ role + ", fullName=" + fullName + ", enabled=" + enabled + ", confirmationToken=" + confirmationToken
+				+ "]";
 	}
 
 	@Override
@@ -159,4 +173,16 @@ public class User implements UserDetails {
 		return id;
 	}
 
+	public String getConfirmationToken() {
+		return confirmationToken;
+	}
+
+	public void setConfirmationToken(String confirmationToken) {
+		this.confirmationToken = confirmationToken;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+	
 }

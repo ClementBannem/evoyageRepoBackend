@@ -13,5 +13,7 @@ import com.social.entities.User;
 public interface UserRepository extends JpaRepository<User, Long> {
 
 	User findOneByUsername(String username);
+	User findByEmail(String email);
+	User findByConfirmationToken(String confirmationToken);
 	//List<User> findAllByUsername(String username);
 }

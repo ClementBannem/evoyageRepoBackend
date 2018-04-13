@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -42,13 +43,18 @@ public class AutocarController {
 
 		return new ResponseEntity<AutoCar>(autocarRepository.save(newAutoCar), HttpStatus.CREATED);
 	}
-
     
     @GetMapping(value = "/findbyid/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<AutoCar> findByLastId(@PathVariable int id) {
 
 		List<AutoCar> autocar = autocarRepository.findById(id);
 		return autocar;
+	}
+    
+    @DeleteMapping(value = "/autocars/{id}")
+	public boolean deleteAutocar(@PathVariable int id) {
+    	autocarRepository.delete(id);
+		return true;
 	}
 
 }

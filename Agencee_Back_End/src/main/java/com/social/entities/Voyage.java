@@ -7,17 +7,21 @@ import javax.persistence.*;
 
 
 @Entity
-@Table(name="Transport")
+@Table(name="Voyage")
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name="TYPE_Transport",discriminatorType=DiscriminatorType.STRING,length=30)
+@DiscriminatorColumn(name="TYPE_Voyage",discriminatorType=DiscriminatorType.STRING,length=30)
 
-public class Transport implements Serializable {
+public class Voyage implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	
 	private int id;
 	@Column(name = "escale")
 	private String escale;
+	
+	@Column(name = "libelle_transport")
+	private String libelle;
 
 	@Column(name = "date_Depart")
 	private String date_Depart;
@@ -33,19 +37,24 @@ public class Transport implements Serializable {
 
 	@Column(name = "prix")
 	private double prix;
+	
+	@Column(name = "compagnie")
+	private String compagnie;
 
-	public Transport(String escale, String date_Depart, String date_Arrive, String heure_Depart, String heure_Arrive,
-			double prix) {
+	public Voyage(String escale, String libelle, String date_Depart, String date_Arrive, String heure_Depart,
+			String heure_Arrive, double prix,String compagnie) {
 		super();
 		this.escale = escale;
+		this.libelle = libelle;
 		this.date_Depart = date_Depart;
 		this.date_Arrive = date_Arrive;
 		Heure_Depart = heure_Depart;
 		Heure_Arrive = heure_Arrive;
 		this.prix = prix;
+		this.compagnie = compagnie;
 	}
 
-	public Transport() {
+	public Voyage() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -56,14 +65,6 @@ public class Transport implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public String isEscale() {
-		return escale;
-	}
-
-	public void setEscale(String escale) {
-		this.escale = escale;
 	}
 
 	public String getDate_Depart() {
@@ -106,6 +107,29 @@ public class Transport implements Serializable {
 		this.prix = prix;
 	}
 
+	public String getLibelle() {
+		return libelle;
+	}
+
+	public void setLibelle(String libelle) {
+		this.libelle = libelle;
+	}
+
+	public String getEscale() {
+		return escale;
+	}
+
+	public void setEscale(String escale) {
+		this.escale = escale;
+	}
+
+	public String getCompagnie() {
+		return compagnie;
+	}
+
+	public void setCompagnie(String compagnie) {
+		this.compagnie = compagnie;
+	}
 	
 
 }

@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="Avion")
-public class Avion extends Transport {
+public class Avion extends Voyage {
 	
 	private String aeroport_Depart;
 	private String aeroport_Arrive;
@@ -17,16 +17,16 @@ public class Avion extends Transport {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Avion(String escale, String date_Depart, String date_Arrive, String heure_Depart, String heure_Arrive,
-			double prix) {
-		super(escale, date_Depart, date_Arrive, heure_Depart, heure_Arrive, prix);
+	public Avion(String escale,String libelle, String date_Depart, String date_Arrive, String heure_Depart, String heure_Arrive,
+			double prix,String compagnie) {
+		super(escale,libelle, date_Depart, date_Arrive, heure_Depart, heure_Arrive, prix,compagnie);
 		// TODO Auto-generated constructor stub
 	}
 	
 	
-	public Avion(String escale, String date_Depart, String date_Arrive, String heure_Depart, String heure_Arrive,
-			double prix, String aeroport_Depart, String aeroport_Arrive) {
-		super(escale, date_Depart, date_Arrive, heure_Depart, heure_Arrive, prix);
+	public Avion(String escale,String libelle, String date_Depart, String date_Arrive, String heure_Depart, String heure_Arrive,
+			double prix, String aeroport_Depart, String aeroport_Arrive, String compagnie) {
+		super(escale,libelle, date_Depart, date_Arrive, heure_Depart, heure_Arrive, prix,compagnie);
 		this.aeroport_Depart = aeroport_Depart;
 		this.aeroport_Arrive = aeroport_Arrive;
 	}
@@ -43,6 +43,4 @@ public class Avion extends Transport {
 		this.aeroport_Arrive = aeroport_Arrive;
 	}
 	
-	
-
 }
