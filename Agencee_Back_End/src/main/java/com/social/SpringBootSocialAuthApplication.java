@@ -16,6 +16,8 @@ import com.social.dao.ClientRepository;
 public class SpringBootSocialAuthApplication {
 	@Autowired
 	private ClientRepository cr;
+	
+	//test
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringBootSocialAuthApplication.class, args);

@@ -21,9 +21,9 @@ import com.social.entities.Gite;
 
 @RestController
 @RequestMapping("gite")
-@CrossOrigin(origins="http://localhost:4200",allowedHeaders="*")
+@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
 public class GiteController {
-	
+
 	@Autowired
 	private GiteRepository giteRepo;
 
@@ -35,20 +35,20 @@ public class GiteController {
 		gite.forEach(list::add);
 		return list;
 	}
-	
+
 	@RequestMapping(value = "/postHebergementGite", method = RequestMethod.POST)
-	public ResponseEntity<?> createGite(@RequestBody Gite newGite) {		
+	public ResponseEntity<?> createGite(@RequestBody Gite newGite) {
 
 		return new ResponseEntity<Gite>(giteRepo.save(newGite), HttpStatus.CREATED);
 	}
-	
+
 	@GetMapping(value = "/findbylibelle/{libelle}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Gite> findByLibelle(@PathVariable String libelle) {
 
 		List<Gite> gite = giteRepo.findByLibelle(libelle);
 		return gite;
 	}
-	
+
 	@DeleteMapping(value = "/gites/{id}")
 	public boolean deleteGite(@PathVariable int id) {
 		giteRepo.delete(id);

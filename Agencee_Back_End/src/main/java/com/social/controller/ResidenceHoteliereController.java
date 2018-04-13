@@ -23,10 +23,10 @@ import com.social.entities.Residence_Hoteliere;
 @RequestMapping("residenceHoteliere")
 @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
 public class ResidenceHoteliereController {
-	
+
 	@Autowired
 	private ResidenceHoteliereRepository rhRepo;
-	
+
 	@GetMapping(value = "/listeHebergementResidenceHoteliere", produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Residence_Hoteliere> getAll() {
 		List<Residence_Hoteliere> list = new ArrayList<>();
@@ -35,19 +35,20 @@ public class ResidenceHoteliereController {
 		resHot.forEach(list::add);
 		return list;
 	}
-	
+
 	@RequestMapping(value = "/postHebergementResidenceHoteliere", method = RequestMethod.POST)
-	public ResponseEntity<?> createResidenceHoteliere(@RequestBody Residence_Hoteliere newResidenceHoteliere) {		
+	public ResponseEntity<?> createResidenceHoteliere(@RequestBody Residence_Hoteliere newResidenceHoteliere) {
 
 		return new ResponseEntity<Residence_Hoteliere>(rhRepo.save(newResidenceHoteliere), HttpStatus.CREATED);
 	}
-	
+
 	@GetMapping(value = "/findbylibelle/{libelle}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Residence_Hoteliere> findByLibelle(@PathVariable String libelle) {
 
 		List<Residence_Hoteliere> resHot = rhRepo.findByLibelle(libelle);
 		return resHot;
 	}
+
 	@DeleteMapping(value = "/residences/{id}")
 	public boolean deleteResidence(@PathVariable int id) {
 		rhRepo.delete(id);
