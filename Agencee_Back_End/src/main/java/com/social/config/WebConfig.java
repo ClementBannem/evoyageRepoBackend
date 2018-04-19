@@ -49,7 +49,8 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
 	    return new WebMvcConfigurerAdapter() {
 	        @Override
 	        public void addCorsMappings(CorsRegistry registry) {
-	            registry.addMapping("/**").allowedOrigins("http://localhost:4200");
+	           // registry.addMapping("/**").allowedOrigins("http://localhost:4200");
+	            registry.addMapping("/**").allowedOrigins("http://localhost:4201");
 	          
 	        }
 	    };
@@ -79,6 +80,7 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
 				,"/camping/postHebergementCamping","/gite/listeHebergementGite","/gite/postHebergementGite"
 				,"/residenceHoteliere/listeHebergementResidenceHoteliere"
 				,"/residenceHoteliere/postHebergementResidenceHoteliere","/camping/campings/{id}","/gite/gites/{id}"
+				,"/societe/listeSocietes","/societe/postSociete","/societe/societes/{id}"
 				,"/residenceHoteliere/residences/{id}").permitAll()
 		// authenticate all remaining URLS
 		.anyRequest().fullyAuthenticated().and()

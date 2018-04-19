@@ -44,7 +44,7 @@ public class OffreController {
 
     
     @GetMapping(value = "/findbyid/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<Offre> findByLastId(@PathVariable int id) {
+	public List<Offre> findByLastId(@PathVariable long id) {
 
 		List<Offre> offre = offreRepository.findByIdO(id);
 		return offre;
@@ -52,7 +52,7 @@ public class OffreController {
     
     @DeleteMapping(value="/offres/{id}")
  	public boolean deleteClient(@PathVariable long id) {
-	offreRepository.delete((int) id);
+	offreRepository.delete(id);
  		return true;
  	}
 

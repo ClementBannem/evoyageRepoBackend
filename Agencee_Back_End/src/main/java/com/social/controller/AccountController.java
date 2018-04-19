@@ -34,6 +34,7 @@ import com.social.util.CustomErrorType;
  */
 @RestController
 @RequestMapping("account")
+@CrossOrigin(origins="http://localhost:4200",allowedHeaders="*")
 public class AccountController {
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -49,7 +50,7 @@ public class AccountController {
 	private UserRepository repository;
 
 	// request method to create a new account by a guest
-	@CrossOrigin
+
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public ResponseEntity<?> createUser(@RequestBody User newUser, BindingResult bindingResult,
 			HttpServletRequest request, @RequestParam Map<String, String> requestParams) {
@@ -101,7 +102,7 @@ public class AccountController {
 	}
 
 	// this is the login api/service
-	@CrossOrigin
+
 	@RequestMapping("/login")
 	public Principal user(Principal principal) {
 		logger.info("user logged " + principal);

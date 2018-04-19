@@ -7,6 +7,8 @@ package com.social.entities;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.*;
 
@@ -68,6 +70,12 @@ public class User implements UserDetails {
 	@Column(name = "confirmation_token")
 	private String confirmationToken;
 
+	@OneToMany(cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            mappedBy = "user")
+   private Set<Client> clients = new HashSet<>();
+
+	
 	public User() {
 
 	}

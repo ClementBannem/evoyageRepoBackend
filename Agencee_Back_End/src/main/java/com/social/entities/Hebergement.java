@@ -1,15 +1,20 @@
 package com.social.entities;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -29,6 +34,12 @@ public class Hebergement implements Serializable {
 	private float prix;
 	private String classement;
 	private String repas;
+	
+	@OneToMany(cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            mappedBy = "hebergement")
+    private Set<Reservation> reservations = new HashSet<>();
+
 
 	public Hebergement(String libelle, String adresse, String pays, String ville, int codePostal, float prix,
 			String classement, String repas) {

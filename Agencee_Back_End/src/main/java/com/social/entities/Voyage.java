@@ -2,6 +2,8 @@ package com.social.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.*;
 
@@ -41,6 +43,12 @@ public class Voyage implements Serializable {
 	@Column(name = "compagnie")
 	private String compagnie;
 
+	@OneToMany(cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            mappedBy = "voyage")
+private Set<Reservation> reservations = new HashSet<>();
+
+	
 	public Voyage(String escale, String libelle, String date_Depart, String date_Arrive, String heure_Depart,
 			String heure_Arrive, double prix,String compagnie) {
 		super();
