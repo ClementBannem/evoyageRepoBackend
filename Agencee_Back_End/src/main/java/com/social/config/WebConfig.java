@@ -80,8 +80,8 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
 				,"/camping/postHebergementCamping","/gite/listeHebergementGite","/gite/postHebergementGite"
 				,"/residenceHoteliere/listeHebergementResidenceHoteliere"
 				,"/residenceHoteliere/postHebergementResidenceHoteliere","/camping/campings/{id}","/gite/gites/{id}"
-				,"/societe/listeSocietes","/societe/postSociete","/societe/societes/{id}"
-				,"/residenceHoteliere/residences/{id}").permitAll()
+				,"/residenceHoteliere/residences/{id}","/societe/listeSocietes","/societe/postSociete"
+				,"/societe/societes/{id}").permitAll()
 		// authenticate all remaining URLS
 		.anyRequest().fullyAuthenticated().and()
       /* "/logout" will log the user out by invalidating the HTTP Session,
