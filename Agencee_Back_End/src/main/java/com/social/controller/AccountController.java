@@ -80,6 +80,35 @@ public class AccountController {
 		}
 	}
 	
+	@RequestMapping(value = "/registerClient", method = RequestMethod.POST)
+	public ResponseEntity<?> createUserClient(@RequestBody User newUser, BindingResult bindingResult,
+			HttpServletRequest request, @RequestParam Map<String, String> requestParams) {
+		if (userService.find(newUser.getUsername()) != null) {
+			logger.error("username Already exist " + newUser.getUsername());
+			return new ResponseEntity(
+					new CustomErrorType("user with username " + newUser.getUsername() + "already exist "),
+					HttpStatus.CONFLICT);
+		} else {
+			newUser.setEnabled(false);
+			newUser.setRole("USER");
+			newUser.setConfirmationToken(UUID.randomUUID().toString());
+			// newUser.setPassword(bCryptPasswordEncoder.encode(requestParams.get("password")));
+
+			String appUrl = request.getScheme() + "://" + request.getServerName();
+
+			SimpleMailMessage registrationEmail = new SimpleMailMessage();
+			registrationEmail.setTo(newUser.getEmail());
+			registrationEmail.setSubject("Registration Confirmation");
+			registrationEmail.setText("To confirm your e-mail address, please click the link below:\n" + appUrl
+					+ "/confirm?token=" + newUser.getConfirmationToken());
+			registrationEmail.setFrom("noreply@domain.com");
+
+			emailService.sendEmail(registrationEmail);
+
+			return new ResponseEntity<User>(userService.save(newUser), HttpStatus.CREATED);
+		}
+	}
+	
 	// Process confirmation link
 		/*@RequestMapping(value = "/confirmAccount", method = RequestMethod.GET)
 		public ResponseEntity<?> confirmRegistration(@RequestParam("token") String token) {
