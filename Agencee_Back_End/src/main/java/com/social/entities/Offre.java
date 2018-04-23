@@ -12,7 +12,7 @@ public class Offre implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int idO;
+	private long idO;
 	private String libelle;
 	private String date_debut;
 	private String date_fin;
@@ -30,7 +30,7 @@ public class Offre implements Serializable{
 	public long getIdO() {
 		return idO;
 	}
-	public void setIdO(int idO) {
+	public void setIdO(long idO) {
 		this.idO = idO;
 	}
 	public String getLibelle() {

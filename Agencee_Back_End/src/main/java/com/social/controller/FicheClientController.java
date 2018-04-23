@@ -21,15 +21,19 @@ import org.springframework.web.bind.annotation.RestController;
 import com.social.dao.ClientRepository;
 import com.social.entities.Client;
 import com.social.entities.User;
+import com.social.services.ClientService;
 import com.social.util.CustomErrorType;
 
 @RestController
 @RequestMapping("fiche")
-@CrossOrigin(origins="http://localhost:4200",allowedHeaders="*")
+@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
 public class FicheClientController {
 
 	@Autowired
 	private ClientRepository clientrepository;
+	
+	@Autowired
+	private ClientService clientservices;
 
 	@GetMapping(value = "/ficheclients", produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Client> getAll() {
@@ -39,11 +43,11 @@ public class FicheClientController {
 		clients.forEach(list::add);
 		return list;
 	}
-	
-	@RequestMapping(value = "/postficheclient", method = RequestMethod.POST)
-	public ResponseEntity<?> createClient(@RequestBody Client newClient) {		
 
-		return new ResponseEntity<Client>(clientrepository.save(newClient), HttpStatus.CREATED);
+	@RequestMapping(value = "/postficheclient", method = RequestMethod.POST)
+	public ResponseEntity<?> createClient(@RequestBody Client newClient) {
+
+		return new ResponseEntity<Client>(clientservices.save(newClient), HttpStatus.CREATED);
 	}
 
 	@GetMapping(value = "/findbynom/{nom}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -52,15 +56,19 @@ public class FicheClientController {
 		List<Client> clients = clientrepository.findByNom(nom);
 		return clients;
 	}
-	
-	@DeleteMapping(value="/client/{id}")
+
+	@DeleteMapping(value = "/client/{id}")
 	public boolean deleteClient(@PathVariable Long id) {
 		clientrepository.delete(id);
 		return true;
 	}
-	
-	@PutMapping("/updateficheclient")
-	public Client updateClient(Client client) {
+
+	// @RequestMapping(value = "/updateficheclient", method = RequestMethod.PUT)
+	// public Client updateClient(@RequestBody Client client) {
+	// return clientrepository.save(client);
+	// }
+	@PutMapping(value = "/updateficheclient")
+	public Client updateClient(@RequestBody Client client) {
 		return clientrepository.save(client);
 	}
 

@@ -52,7 +52,7 @@ public class OffreController {
     
     @DeleteMapping(value="/offres/{id}")
  	public boolean deleteClient(@PathVariable long id) {
-	offreRepository.delete(id);
+	offreRepository.delete((int) id);
  		return true;
  	}
 

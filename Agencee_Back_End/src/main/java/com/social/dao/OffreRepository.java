@@ -8,6 +8,6 @@ import com.social.entities.Offre;
 
 public interface OffreRepository extends JpaRepository<Offre, Integer>{
 	
-	List<Offre> findByIdO(int idO);
+	List<Offre> findByIdO(long id);
 
 }

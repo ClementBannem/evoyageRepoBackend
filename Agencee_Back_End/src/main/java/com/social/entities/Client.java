@@ -1,12 +1,19 @@
 package com.social.entities;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -56,13 +63,25 @@ public class Client {
 
 	@Column(name = "expirationCB")
 	private String expirationCB;
+	
+	private String typeClient;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+	private User user;
+	
+	@OneToMany(cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            mappedBy = "client")
+   private Set<Reservation> reservations = new HashSet<>();
+
 
 	protected Client() {
 	}
 
 	public Client(String nom, String prenom, String email, long portable, long domicile, String sexe,
 			String date_naissance, String adresse, int code_postale, String ville, String pays, String numeroCB,
-			String expirationCB) {		
+			String expirationCB, String typeClient) {		
 		this.nom = nom;
 		this.prenom = prenom;
 		this.email = email;
@@ -195,7 +214,16 @@ public class Client {
 		return "Clients [nom=" + nom + ", prenom=" + prenom + ", email=" + email + ", portable=" + portable
 				+ ", domicile=" + domicile + ", sexe=" + sexe + ", date_naissance=" + date_naissance + ", adresse="
 				+ adresse + ", code_postale=" + code_postale + ", ville=" + ville + ", pays=" + pays + ", numeroCB="
-				+ numeroCB + ", expirationCB=" + expirationCB + "]";
+				+ numeroCB + ", expirationCB=" + expirationCB + ",typeClient="+ typeClient + "]";
 	}
 
+	public String getTypeClient() {
+		return typeClient;
+	}
+
+	public void setTypeClient(String typeClient) {
+		this.typeClient = typeClient;
+	}
+
+	
 }
