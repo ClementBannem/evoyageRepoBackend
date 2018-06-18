@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,7 +37,7 @@ import com.social.services.UserService;
 import com.social.util.CustomErrorType;
 
 /**
- * @author kamal berriga
+ * @author Clement Bannem
  *
  */
 @RestController
@@ -65,9 +69,9 @@ public class AccountController {
 					HttpStatus.CONFLICT);
 		} else {
 			newUser.setEnabled(false);
-			newUser.setRole("AGENT");
+			newUser.setRole("ADMIN");
 			newUser.setConfirmationToken(UUID.randomUUID().toString());
-			// newUser.setPassword(bCryptPasswordEncoder.encode(requestParams.get("password")));
+			//newUser.setPassword(bCryptPasswordEncoder.encode(newUser.getPassword())); //lors du login, ne decode pas
 
 			String appUrl = request.getScheme() + "://" + request.getServerName();
 
@@ -123,8 +127,10 @@ public class AccountController {
 			modelAndView.addObject("invalidToken", "Oops!  This is an invalid confirmation link.");
 		} else { // Token found
 			modelAndView.addObject("confirmationToken", user.getConfirmationToken());
+			user.setEnabled(true);
 		}
-
+		
+		
 		modelAndView.setViewName("confirm");
 		return modelAndView;
 	}
@@ -134,23 +140,23 @@ public class AccountController {
 	public ModelAndView confirmRegistration(ModelAndView modelAndView, BindingResult bindingResult,
 			@RequestParam Map<String, String> requestParams, RedirectAttributes redir) {
 
-		modelAndView.setViewName("confirm");
+		//modelAndView.setViewName("confirm");
 
-		Zxcvbn passwordCheck = new Zxcvbn();
+		//Zxcvbn passwordCheck = new Zxcvbn();
 
-		Strength strength = passwordCheck.measure(requestParams.get("password"));
+		//Strength strength = passwordCheck.measure(requestParams.get("password"));
 
-		if (strength.getScore() < 3) {
-			// modelAndView.addObject("errorMessage", "Your password is too weak. Choose a
-			// stronger one.");
-			bindingResult.reject("password");
-
-			redir.addFlashAttribute("errorMessage", "Your password is too weak.  Choose a stronger one.");
-
-			modelAndView.setViewName("redirect:confirm?token=" + requestParams.get("token"));
-			System.out.println(requestParams.get("token"));
-			return modelAndView;
-		}
+//		if (strength.getScore() < 3) {
+//			// modelAndView.addObject("errorMessage", "Your password is too weak. Choose a
+//			// stronger one.");
+//			bindingResult.reject("password");
+//
+//			redir.addFlashAttribute("errorMessage", "Your password is too weak.  Choose a stronger one.");
+//
+//			modelAndView.setViewName("redirect:confirm?token=" + requestParams.get("token"));
+//			System.out.println(requestParams.get("token"));
+//			return modelAndView;
+//		}
 
 		// Find the user associated with the reset token
 		User user = userService.findByConfirmationToken(requestParams.get("token"));
@@ -177,8 +183,25 @@ public class AccountController {
 
 	@RequestMapping("/login")
 	public Principal user(Principal principal) {
-		logger.info("user logged " + principal);
+		Object infos = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		System.out.println("UTILISATEUR CONNECTE EST  --------------------->"+ infos);
+		logger.info("Utilisateur connecté est " + principal);
 		return principal;
 	}
+	@RequestMapping("/LoggedIn")
+	public Principal Luser(Principal principal) {
+		System.out.println("UTILISATEUR CONNECTE APRES AUTHENTIFICATION EST  --------------------->"+ principal);
+		return principal;
+	}
+	
+	@RequestMapping(value="/logouto", method = RequestMethod.POST)
+    public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("UTILISATEUR DECONNECTE AVEC SUCCES");
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null){
+            new SecurityContextLogoutHandler().logout(request, response, auth);
+        }
+        return "redirect:/";
+    }
 
 }

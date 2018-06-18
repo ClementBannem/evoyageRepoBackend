@@ -9,4 +9,6 @@ import com.social.entities.Evenement;
 public interface EvenementRepository extends JpaRepository<Evenement, Integer> {
 
 	List<Evenement> findByIdE(int idE);
+	Evenement findByTypeE (String typeE);
+	//List<Evenement> findByTypeE (String typeE);
 }

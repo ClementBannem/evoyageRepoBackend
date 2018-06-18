@@ -15,7 +15,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+
+import org.hibernate.annotations.CreationTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "clients")
@@ -25,7 +28,7 @@ public class Client {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	@Column(name = "nom")
-	@NotNull
+	// @NotNull
 	private String nom;
 
 	@Column(name = "prenom")
@@ -63,25 +66,29 @@ public class Client {
 
 	@Column(name = "expirationCB")
 	private String expirationCB;
-	
-	private String typeClient;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-	private User user;
-	
-	@OneToMany(cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY,
-            mappedBy = "client")
-   private Set<Reservation> reservations = new HashSet<>();
 
+//	@Column(name = "typeClient")
+//	private String typeClient;
+
+	@Column(name = "ajoute_par_utilisateur")
+	private Long ajoutePar;
+	
+	@CreationTimestamp
+    private Date created;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id") // nullable = false
+	private User user;
+
+//	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "client")
+//	private Set<Reservation> reservations = new HashSet<>();
 
 	protected Client() {
 	}
 
 	public Client(String nom, String prenom, String email, long portable, long domicile, String sexe,
 			String date_naissance, String adresse, int code_postale, String ville, String pays, String numeroCB,
-			String expirationCB, String typeClient) {		
+			String expirationCB, String typeClient, User user, Long ajoutePar) {
 		this.nom = nom;
 		this.prenom = prenom;
 		this.email = email;
@@ -95,6 +102,8 @@ public class Client {
 		this.pays = pays;
 		this.numeroCB = numeroCB;
 		this.expirationCB = expirationCB;
+		this.user = user;
+		this.ajoutePar = ajoutePar;
 	}
 
 	public Long getId() {
@@ -209,21 +218,29 @@ public class Client {
 		this.expirationCB = expirationCB;
 	}
 
+	public Long getAjoutePar() {
+		return ajoutePar;
+	}
+
+	public void setAjoutePar(Long ajoutePar) {
+		this.ajoutePar = ajoutePar;
+	}
+
 	@Override
 	public String toString() {
-		return "Clients [nom=" + nom + ", prenom=" + prenom + ", email=" + email + ", portable=" + portable
+		return "Client [nom=" + nom + ", prenom=" + prenom + ", email=" + email + ", portable=" + portable
 				+ ", domicile=" + domicile + ", sexe=" + sexe + ", date_naissance=" + date_naissance + ", adresse="
 				+ adresse + ", code_postale=" + code_postale + ", ville=" + ville + ", pays=" + pays + ", numeroCB="
-				+ numeroCB + ", expirationCB=" + expirationCB + ",typeClient="+ typeClient + "]";
+				+ numeroCB + ", expirationCB=" + expirationCB + ", typeClient=" + ", ajoutePar="
+				+ ajoutePar + ", user=" + user  + "]";
 	}
 
-	public String getTypeClient() {
-		return typeClient;
+	public User getUser() {
+		return user;
 	}
 
-	public void setTypeClient(String typeClient) {
-		this.typeClient = typeClient;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
-	
 }

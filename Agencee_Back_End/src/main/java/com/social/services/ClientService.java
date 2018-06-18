@@ -13,11 +13,12 @@ public class ClientService {
 	ClientRepository clientrepository;
 	
 	public Client save(Client client) {
-		return clientrepository.saveAndFlush(client);
+		return clientrepository.save(client);
 	}
 	
 	public Client update(Client client) {
-		return clientrepository.save(client);
+		return clientrepository.saveAndFlush(client);
+		//return null;
 	}
 	
 	public Client find(String nom) {

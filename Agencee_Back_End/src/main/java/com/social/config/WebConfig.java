@@ -19,7 +19,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import com.social.services.AppUserDetailsService;
 
 /**
- * @author kamal berriga
+ * @author clement Bannem
  *
  */
 @Configurable
@@ -37,24 +37,26 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(appUserDetailsService);
 	}
-	@Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 
-	// this configuration allow the client app to access the this api 
-	// all the domain that consume this api must be included in the allowed o'rings 
+	@Bean
+	public BCryptPasswordEncoder bCryptPasswordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+
+	// this configuration allow the client app to access the this api
+	// all the domain that consume this api must be included in the allowed o'rings
 	@Bean
 	public WebMvcConfigurer corsConfigurer() {
-	    return new WebMvcConfigurerAdapter() {
-	        @Override
-	        public void addCorsMappings(CorsRegistry registry) {
-	           // registry.addMapping("/**").allowedOrigins("http://localhost:4200");
-	            registry.addMapping("/**").allowedOrigins("http://localhost:4201");
-	          
-	        }
-	    };
+		return new WebMvcConfigurerAdapter() {
+			@Override
+			public void addCorsMappings(CorsRegistry registry) {
+				// registry.addMapping("/**").allowedOrigins("http://localhost:4200");
+				registry.addMapping("/**").allowedOrigins("http://localhost:4201");
+
+			}
+		};
 	}
+
 	// This method is for overriding some configuration of the WebSecurity
 	// If you want to ignore some request or request patterns then you can
 	// specify that inside this method
@@ -68,39 +70,31 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.cors().and()
-		// starts authorizing configurations
-		.authorizeRequests()
-		// ignoring the guest's urls "
-		.antMatchers("/account/register","/account/confirm","/account/registerClient","/account/login","/logout","/fiche/postficheclient","/fiche/ficheclients"
-				,"/bateau/postbateau","/fiche/client/{id}","/fiche/updateficheclient"
-				,"/bateau/listebateaux","/bateau/bateaux/{id}","/evenement/postevement","/evenement/evenements/{id}","/evenement/listeEvenement"
-				,"/avion/postTransportAvion","/avion/listeTransportAvion","/avion/avions/{id}","/autocar/postTransportAutocar"
-				,"/autocar/listeTransportAutocar","/autocar/autocars/{id}","/train/postTransportTrain","/train/listeTransportTrain"
-				,"/train/trains/{id}","/offre/postOffre","/offre/listeOffres","/offre/offres/{id}","/camping/listeHebergementCamping"
-				,"/camping/postHebergementCamping","/gite/listeHebergementGite","/gite/postHebergementGite"
-				,"/residenceHoteliere/listeHebergementResidenceHoteliere"
-				,"/residenceHoteliere/postHebergementResidenceHoteliere","/camping/campings/{id}","/gite/gites/{id}"
-				,"/residenceHoteliere/residences/{id}","/societe/listeSocietes","/societe/postSociete"
-				,"/societe/societes/{id}","/adherant/listeAdherants","/adherant/postAdherant","/adherant/adherants/{id}").permitAll()
-		// authenticate all remaining URLS
-		.anyRequest().fullyAuthenticated().and()
-      /* "/logout" will log the user out by invalidating the HTTP Session,
-       * cleaning up any {link rememberMe()} authentication that was configured, */
-		.logout()
-        .permitAll()
-		.logoutRequestMatcher(new AntPathRequestMatcher("/logout", "POST"))
-        .and()
-		// enabling the basic authentication
-		.httpBasic().and()
-		// configuring the session on the server
-		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED).and()
-		// disabling the CSRF - Cross Site Request Forgery
-		.csrf().disable();
+				// starts authorizing configurations
+				.authorizeRequests()
+				// ignoring the guest's urls "
+				.antMatchers("/account/**", "/logout", "/bateau/**","/fiche/**", "/evenement/**", "/avion/**",
+						"/autocar/**", "/train/**", "/offre/**", "/camping/**", "/gite/**", "/residenceHoteliere/**",
+						"/societe/**", "/adherant/**","/reservation/**")
+				.permitAll()
+				// authenticate all remaining URLS
+				.anyRequest().fullyAuthenticated().and()
+				/*
+				 * "/logout" will log the user out by invalidating the HTTP Session, cleaning up
+				 * any {link rememberMe()} authentication that was configured,
+				 */
+				.logout().permitAll().logoutRequestMatcher(new AntPathRequestMatcher("/logout", "POST")).and()
+				// enabling the basic authentication
+				.httpBasic().and()
+				// configuring the session on the server
+				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED).and()
+				// disabling the CSRF - Cross Site Request Forgery
+				.csrf().disable();
 	}
+
 	@Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(appUserDetailsService).passwordEncoder(bCryptPasswordEncoder());
-    }
+	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(appUserDetailsService).passwordEncoder(bCryptPasswordEncoder());
+	}
 
 }
-

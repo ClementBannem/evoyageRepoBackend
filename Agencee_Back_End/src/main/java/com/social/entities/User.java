@@ -8,6 +8,7 @@ package com.social.entities;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -24,14 +25,14 @@ import com.fasterxml.jackson.annotation.JsonProperty.Access;
 /**
  * Description of User.
  * 
- * @author kamal berriga
+ * @author Clement Bannem
  */
 @Entity
 @Table(name = "user")
 @Scope("session")
 public class User implements UserDetails {
 	public static enum Role {
-		USER		
+		USER
 	}
 
 	/**
@@ -63,19 +64,16 @@ public class User implements UserDetails {
 	 * Description of the property full name.
 	 */
 	private String fullName;
-	
+
 	@Column(name = "enabled")
 	private boolean enabled;
-	
+
 	@Column(name = "confirmation_token")
 	private String confirmationToken;
 
-	@OneToMany(cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY,
-            mappedBy = "user")
-   private Set<Client> clients = new HashSet<>();
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+	private List<Client> clients;
 
-	
 	public User() {
 
 	}
@@ -90,9 +88,8 @@ public class User implements UserDetails {
 		this.fullName = fullName;
 		this.enabled = enabled;
 		this.confirmationToken = confirmationToken;
+		
 	}
-
-
 
 	@JsonIgnore
 	@Override
@@ -128,9 +125,8 @@ public class User implements UserDetails {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", email=" + email + ", password=" + password + ", role="
-				+ role + ", fullName=" + fullName + ", enabled=" + enabled + ", confirmationToken=" + confirmationToken
-				+ "]";
+		return "User [username=" + username + ", email=" + email + ", password=" + password + ", role=" + role
+				+ ", fullName=" + fullName + ", enabled=" + enabled + ", confirmationToken=" + confirmationToken + "]";
 	}
 
 	@Override
@@ -192,5 +188,5 @@ public class User implements UserDetails {
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
-	
+
 }

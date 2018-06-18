@@ -16,16 +16,18 @@ public class Offre implements Serializable{
 	private String libelle;
 	private String date_debut;
 	private String date_fin;
+	private String description;
 	public Offre() {
 		
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Offre(String libelle, String date_debut, String date_fin) {
+	public Offre(String libelle, String date_debut, String date_fin, String description) {
 		super();
 		this.libelle = libelle;
 		this.date_debut = date_debut;
 		this.date_fin = date_fin;
+		this.description = description;
 	}
 	public long getIdO() {
 		return idO;
@@ -51,6 +53,13 @@ public class Offre implements Serializable{
 	public void setDate_fin(String date_fin) {
 		this.date_fin = date_fin;
 	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
 	
 
 }

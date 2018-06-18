@@ -8,14 +8,17 @@ import com.social.entities.Reservation;
 
 
 
-@Service("reservtionService")
-public class ReservtionService {
-	private ReservationRepository reservationRepository;
-
+//@Service("reservationService")
+@Service
+public class ReservationService {
+	
 	@Autowired
-	public ReservtionService(ReservationRepository reservationRepository) {
-		this.reservationRepository = reservationRepository;
-	}
+	ReservationRepository reservationRepository;
+
+//	@Autowired
+//	public ReservationService(ReservationRepository reservationRepository) {
+//		this.reservationRepository = reservationRepository;
+//	}
 	
 	public Reservation save(Reservation res) {
 		return reservationRepository.save(res);

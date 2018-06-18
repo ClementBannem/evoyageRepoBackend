@@ -20,6 +20,7 @@ public class Evenement implements Serializable {
 	private String heure_deb;
 	private String heure_fin;
 	private double prixE;
+	private String description;
 	
 	public Evenement() {
 		super();
@@ -27,13 +28,14 @@ public class Evenement implements Serializable {
 	}
 
 	
-	public Evenement(String typeE, String dateE, String heure_deb, String heure_fin, double prixE) {
+	public Evenement(String typeE, String dateE, String heure_deb, String heure_fin, double prixE,String description) {
 		super();
 		this.typeE = typeE;
 		this.dateE = dateE;
 		this.heure_deb = heure_deb;
 		this.heure_fin = heure_fin;
 		this.prixE = prixE;
+		this.description = description;
 	}
 
 
@@ -89,6 +91,23 @@ public class Evenement implements Serializable {
 
 	public void setHeure_fin(String heure_fin) {
 		this.heure_fin = heure_fin;
+	}
+
+
+	public String getDescription() {
+		return description;
+	}
+
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+
+	@Override
+	public String toString() {
+		return "Evenement [idE=" + idE + ", typeE=" + typeE + ", dateE=" + dateE + ", heure_deb=" + heure_deb
+				+ ", heure_fin=" + heure_fin + ", prixE=" + prixE + ", description=" + description + "]";
 	}
 	
 	

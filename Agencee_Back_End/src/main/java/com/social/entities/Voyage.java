@@ -29,7 +29,7 @@ public class Voyage implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	public int id;
 
 	@JsonIgnore
 	@Column(name = "escale")

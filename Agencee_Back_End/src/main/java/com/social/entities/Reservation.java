@@ -1,6 +1,13 @@
 package com.social.entities;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "reservation")
@@ -10,53 +17,37 @@ public class Reservation {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int idR;
 	
+//	@ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "client_id", nullable = true)
+	private Long client_id;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "client_id", nullable = false)
-	private Client client;
-	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "offre_id", nullable = false)
+    @JoinColumn(name = "offre_id", nullable = true)
 	private Offre offre;
 	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "voyage_id", nullable = false)
+    @JoinColumn(name = "voyage_id", nullable = true)
 	private Voyage voyage;
 	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "hebergement_id", nullable = false)
+    @JoinColumn(name = "hebergement_id", nullable = true)
 	private Hebergement hebergement;
 	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "evenement_id", nullable = false)
+    @JoinColumn(name = "evenement_id", nullable = true)
 	private Evenement evenement;
-	
-	private String dateD;
-	private String dateA;
-	private String heureD;
-	private String heureA;
-	private String paysD;
-	private String paysA;
-	private String villeD;
-	private String villeA;
 	
 	public Reservation() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Reservation(Client client, Offre offre, Voyage voyage, Hebergement hebergement, Evenement evenement,
-			String dateD, String dateA, String heureD, String heureA, String paysD, String paysA, String villeD,
-			String villeA) {
+	public Reservation(Long client_id, Offre offre, Voyage voyage, Hebergement hebergement, Evenement evenement
+			) {
 		super();
-		this.client = client;
+		this.client_id = client_id;
 		this.offre = offre;
 		this.voyage = voyage;
 		this.hebergement = hebergement;
 		this.evenement = evenement;
-		this.dateD = dateD;
-		this.dateA = dateA;
-		this.heureD = heureD;
-		this.heureA = heureA;
-		this.paysD = paysD;
-		this.paysA = paysA;
-		this.villeD = villeD;
-		this.villeA = villeA;
+
 	}
 
 	public int getIdR() {
@@ -67,12 +58,12 @@ public class Reservation {
 		this.idR = idR;
 	}
 
-	public Client getClient() {
-		return client;
+	public Long getClient_id() {
+		return client_id;
 	}
 
-	public void setClient(Client client) {
-		this.client = client;
+	public void setClient_id(Long client_id) {
+		this.client_id = client_id;
 	}
 
 	public Offre getOffre() {
@@ -105,72 +96,6 @@ public class Reservation {
 
 	public void setEvenement(Evenement evenement) {
 		this.evenement = evenement;
-	}
-
-	public String getDateD() {
-		return dateD;
-	}
-
-	public void setDateD(String dateD) {
-		this.dateD = dateD;
-	}
-
-	public String getDateA() {
-		return dateA;
-	}
-
-	public void setDateA(String dateA) {
-		this.dateA = dateA;
-	}
-
-	public String getHeureD() {
-		return heureD;
-	}
-
-	public void setHeureD(String heureD) {
-		this.heureD = heureD;
-	}
-
-	public String getHeureA() {
-		return heureA;
-	}
-
-	public void setHeureA(String heureA) {
-		this.heureA = heureA;
-	}
-
-	public String getPaysD() {
-		return paysD;
-	}
-
-	public void setPaysD(String paysD) {
-		this.paysD = paysD;
-	}
-
-	public String getPaysA() {
-		return paysA;
-	}
-
-	public void setPaysA(String paysA) {
-		this.paysA = paysA;
-	}
-
-	public String getVilleD() {
-		return villeD;
-	}
-
-	public void setVilleD(String villeD) {
-		this.villeD = villeD;
-	}
-
-	public String getVilleA() {
-		return villeA;
-	}
-
-	public void setVilleA(String villeA) {
-		this.villeA = villeA;
-	}
-	
-	
+	}	
 
 }
