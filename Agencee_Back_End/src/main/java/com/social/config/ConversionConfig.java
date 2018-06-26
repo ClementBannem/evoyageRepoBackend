@@ -10,6 +10,8 @@ import org.springframework.context.support.ConversionServiceFactoryBean;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.core.convert.converter.Converter;
 
+import com.social.converter.ReservationRequestToReservationConverter;
+import com.social.converter.ReservationToReservationResponseConverter;
 import com.social.converter.VoyageToReservableVoyageResponseConverter;
 
 @Configuration
@@ -17,6 +19,8 @@ public class ConversionConfig {
 	private Set<Converter> getConverters(){
 		Set<Converter> converters = new HashSet <Converter>();
 		converters.add(new VoyageToReservableVoyageResponseConverter());
+		converters.add(new ReservationRequestToReservationConverter());
+		converters.add(new ReservationToReservationResponseConverter());
 		
 		return converters;
 		

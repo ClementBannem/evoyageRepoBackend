@@ -1,7 +1,9 @@
 package com.social.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -29,7 +31,7 @@ public class Voyage implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	public int id;
+	public Long id;
 
 	@JsonIgnore
 	@Column(name = "escale")
@@ -68,9 +70,10 @@ public class Voyage implements Serializable {
 
 	@Column(name = "ville_Arrive")
 	private String villeArrive;
-
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "voyage")
-	private Set<Reservation> reservations = new HashSet<>();
+	
+	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	private List<Reservation> reservationsList;
+	
 
 	public Voyage(String escale, String libelle, String date_Depart, String date_Arrive, String heure_Depart,
 			String heure_Arrive, double prix, String compagnie, String paysDepart, String villeDepart,
@@ -88,7 +91,6 @@ public class Voyage implements Serializable {
 		this.villeDepart = villeDepart;
 		this.paysArrive = paysArrive;
 		this.villeArrive = villeArrive;
-		// this.reservations = reservations;
 	}
 
 	public Voyage() {
@@ -96,11 +98,11 @@ public class Voyage implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -200,12 +202,19 @@ public class Voyage implements Serializable {
 		this.villeArrive = villeArrive;
 	}
 
-	public Set<Reservation> getReservations() {
-		return reservations;
+	public List<Reservation> getReservationsList() {
+		return reservationsList;
 	}
 
-	public void setReservations(Set<Reservation> reservations) {
-		this.reservations = reservations;
+	public void setReservationsList(List<Reservation> reservationsList) {
+		this.reservationsList = reservationsList;
 	}
 
+	public void addReservation(Reservation reservation) {
+		if(null == reservationsList)
+			reservationsList = new ArrayList<>();
+		
+		reservationsList.add(reservation);
+		
+	}
 }

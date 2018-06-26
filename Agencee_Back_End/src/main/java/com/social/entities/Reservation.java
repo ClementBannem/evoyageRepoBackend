@@ -1,6 +1,7 @@
 package com.social.entities;
 
 import javax.persistence.Entity;
+import java.time.*;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "reservation")
@@ -15,7 +17,7 @@ public class Reservation {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int idR;
+	private Long idR;
 	
 //	@ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "client_id", nullable = true)
@@ -24,12 +26,15 @@ public class Reservation {
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "offre_id", nullable = true)
 	private Offre offre;
-	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "voyage_id", nullable = true)
+	
+	@ManyToOne
+	@JoinColumn(name = "voyage_id_EntReservation", nullable = true)
 	private Voyage voyage;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hebergement_id", nullable = true)
 	private Hebergement hebergement;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "evenement_id", nullable = true)
 	private Evenement evenement;
@@ -50,11 +55,11 @@ public class Reservation {
 
 	}
 
-	public int getIdR() {
+	public Long getIdR() {
 		return idR;
 	}
 
-	public void setIdR(int idR) {
+	public void setIdR(Long idR) {
 		this.idR = idR;
 	}
 
